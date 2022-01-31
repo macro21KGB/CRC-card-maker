@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import evolog from 'evolog'
 import './App.css'
+import CRCCard from './CRC-card'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -8,7 +9,7 @@ function App() {
   const handleClick = () => {
     setCount(count + 1)
     evolog(count + 1, {
-      bandColor: 'yellow'
+      bandColor: 'orange'
     })
   }
 
@@ -18,6 +19,7 @@ function App() {
       <button id="btn" onClick={handleClick}>
         {count}
       </button>
+      <CRCCard resp="respo" collab="collab" />
     </div>
   )
 }
