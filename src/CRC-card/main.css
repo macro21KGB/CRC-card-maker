@@ -1,14 +1,31 @@
 .CRCCard {
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
-  border-radius: 8px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
   background-color: white;
-  padding: 0.2rem 1rem;
+  padding: 0.5rem 1rem;
+  position: relative;
 
 }
 
-.CRCCard h6 {
+.CRCCard h5 {
   font-style: italic;
   margin: 0;
+  margin: 0.4rem 0;
+}
+
+.deleteBtn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: #ff0000;
+  cursor: pointer;
+  padding: 0.4rem;
+  width: 10px;
+  height: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  color: white;
 }
 
 
@@ -17,4 +34,22 @@
   flex-direction: row;
   justify-content: space-between;
   gap: 1rem;
+}
+
+.responsabilita, .collaboratori {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.responsabilita::before {
+  content: "Responsabilità";
+  font-weight: bold;
+  color: rgba(48, 48, 48, 0.616);
+}
+
+.collaboratori::before {
+  content: "Collaboratori";
+  font-weight: bold;
+  color: rgba(48, 48, 48, 0.616);
 }

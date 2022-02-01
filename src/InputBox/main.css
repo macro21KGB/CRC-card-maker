@@ -1,0 +1,21 @@
+.InputBox {
+    border-radius: 6px;
+    border: 1px solid rgba(53, 53, 53, 0.247);
+    padding: 0.2rem 0.6rem;
+}
+
+input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+input[type="submit"] {
+    border: none;
+    outline: none;
+    background-color: royalblue;
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+    padding: 0.3rem 0.6rem;
+}

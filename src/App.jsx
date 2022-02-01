@@ -1,25 +1,41 @@
-import { useState } from 'react'
-import evolog from 'evolog'
+import { useState } from 'react';
 import './App.css'
 import CRCCard from './CRC-card'
+import { getFromLocalStorage, saveToLocalStorage, deleteFromLocalStorage } from './utils';
+import { nanoid } from 'nanoid';
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  const handleClick = () => {
-    setCount(count + 1)
-    evolog(count + 1, {
-      bandColor: 'orange'
-    })
+
+  const [cards, setCards] = useState(getFromLocalStorage('CRC-card') || []);
+
+  const addCard = () => {
+    setCards([
+      ...cards,
+      {
+        id: nanoid(),
+        name: 'Default',
+        resp: [],
+        collab: []
+      }
+    ]);
+    saveToLocalStorage('CRC-card', cards);
   }
 
+  const deleteCard = (id) => {
+    const newCards = cards.filter(card => card.id !== id);
+    console.log(id);
+    deleteFromLocalStorage('CRC-card', id);
+    setCards(newCards);
+    console.log("DELETE")
+  }
 
   return (
     <div className="App">
-      <button id="btn" onClick={handleClick}>
-        {count}
-      </button>
-      <CRCCard resp="respo" collab="collab" />
+      <button onClick={addCard}>AddCard</button>
+      {cards.map((card, index) => {
+        return (<CRCCard key={index} {...card} deleteCard={deleteCard} />)
+      })}
     </div>
   )
 }
