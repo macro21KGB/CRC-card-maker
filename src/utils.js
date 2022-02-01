@@ -1,3 +1,4 @@
+import evoLog from "evolog";
 import { nanoid } from "nanoid";
 
 
@@ -16,7 +17,7 @@ export const saveToLocalStorage = (key, value) => {
 
     //if the value is already in the array, update it
     const index = currentArray.findIndex(item => item.id === value.id);
-    console.log(index);
+   evoLog("index: "+ index);
     if (index > -1) {
         currentArray[index] = value;
     } else {
@@ -43,5 +44,5 @@ export const deleteFromLocalStorage = (key, id) => {
 }
 
 export const getFromLocalStorage = (key) => {
-    return JSON.parse(localStorage.getItem(key));
+    return JSON.parse(localStorage.getItem(key)) || [];
 }

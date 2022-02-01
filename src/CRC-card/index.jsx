@@ -3,7 +3,7 @@ import Box from '../Box/index';
 import InputBox from '../InputBox';
 import { useState } from 'react';
 import { saveToLocalStorage } from '../utils';
-import { nanoid } from 'nanoid';
+import evolog from 'evolog';
 
 
 /**
@@ -28,12 +28,16 @@ const CRCCard = ({ id, name = "Default Class Name", resp, collab, deleteCard }) 
     else
       setListOfCollaborators([...listOfCollaborators, message]);
 
-    saveToLocalStorage('CRC-card', {
-      id: id,
+const savedCard = {
+      id,
       name,
-      resp: listOfResponsabilites,
-      collab: listOfCollaborators
-    });
+      resp: [...listOfResponsabilites, message],
+      collab: [...listOfCollaborators, message]
+    }
+
+    saveToLocalStorage('CRC-cards', savedCard);
+    evolog("Saved to local storage");
+    evoLog(JSON.stringify(value))
   }
 
   /**

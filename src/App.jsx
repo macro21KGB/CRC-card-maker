@@ -1,13 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css'
 import CRCCard from './CRC-card'
 import { getFromLocalStorage, saveToLocalStorage, deleteFromLocalStorage } from './utils';
 import { nanoid } from 'nanoid';
+import evoLog from 'evolog';
 
 function App() {
 
 
-  const [cards, setCards] = useState(getFromLocalStorage('CRC-card') || []);
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    const cardsFromLocalStorage = getFromLocalStorage('CRC-cards');
+    setCards(cardsFromLocalStorage);
+    evoLog("SETUP")
+    evoLog(JSON.stringify(cardsFromLocalStorage))
+  }, []);
+   
 
   const addCard = () => {
     setCards([
@@ -19,15 +28,15 @@ function App() {
         collab: []
       }
     ]);
-    saveToLocalStorage('CRC-card', cards);
+    saveToLocalStorage('CRC-cards', cards);
   }
 
   const deleteCard = (id) => {
     const newCards = cards.filter(card => card.id !== id);
-    console.log(id);
+    evoLog("DELETE")
     deleteFromLocalStorage('CRC-card', id);
     setCards(newCards);
-    console.log("DELETE")
+    evoLog("\n\n\nDeleted card: " + id);
   }
 
   return (
