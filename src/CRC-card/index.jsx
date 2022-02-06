@@ -1,69 +1,72 @@
 import './main.css'
 import Box from '../Box/index';
 import InputBox from '../InputBox';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { saveToLocalStorage } from '../utils';
 import evolog from 'evolog';
 
 
 /**
  * 
- * @param {{id: string, name: string, resp: string[], collab: string[], deleteCard:Function}} params 
+ * @param {{id: string, name: string, resp: string[], collab: string[], deleteCard:Function, saveCard: Function}} params 
  * @returns 
  */
-const CRCCard = ({ id, name = "Default Class Name", resp, collab, deleteCard }) => {
+const CRCCard = ({ id, name = "Default Class Name", resp, collab, deleteCard, saveCard, saveName }) => {
 
-  const [listOfResponsabilites, setListOfResponsabilites] = useState(resp);
-  const [listOfCollaborators, setListOfCollaborators] = useState(collab);
-
+  const [listOfResponsabilites, setListOfResponsabilites] = useState([]);
+  const [listOfCollaborators, setListOfCollaborators] = useState([]);
+  const [nameOfTheClass, setNameOfTheClass] = useState(name);
 
   /**
    * 
    * @param {string} message 
    * @param {boolean} toResponsabilita 
    */
-  const saveCard = (message, toResponsabilita) => {
-    if (toResponsabilita)
+
+  useEffect(() => {
+    setListOfResponsabilites(resp || []);
+    setListOfCollaborators(collab || []);
+
+  }, []);
+
+
+  const handleSave = (message, toResponsabilita) => {
+    saveCard(message, toResponsabilita, id);
+    console.log("SAVING");
+
+    if (toResponsabilita == true) {
       setListOfResponsabilites([...listOfResponsabilites, message]);
-    else
-      setListOfCollaborators([...listOfCollaborators, message]);
-
-const savedCard = {
-      id,
-      name,
-      resp: [...listOfResponsabilites, message],
-      collab: [...listOfCollaborators, message]
     }
-
-    saveToLocalStorage('CRC-cards', savedCard);
-    evolog("Saved to local storage");
-    evoLog(JSON.stringify(value))
+    else {
+      setListOfCollaborators([...listOfCollaborators, message]);
+    }
   }
 
-  /**
-   * 
-   * @param {number} id 
-   */
+  const handleName = (name) => {
+    saveName(name, id);
+    setNameOfTheClass(name);
+  }
 
 
   return (
     <div className="CRCCard">
       <div onClick={() => deleteCard(id)} className='deleteBtn'>X</div>
-      <h5>{name}</h5>
+      <input className='nameOfTheClass' type="text" value={nameOfTheClass} onChange={(e) => { handleName(e.target.value) }} />
       <div className="sections">
         <div className="responsabilita">
-          {listOfResponsabilites.map((item, index) => {
-            return (<Box key={index} message={item} />)
-          })
+          {
+            listOfResponsabilites.map((item, index) => {
+              return (<Box key={index} message={item} />)
+            })
           }
-          <InputBox saveCard={saveCard} toResponsabilites={true} />
+          <InputBox saveCard={handleSave} toResponsabilites={true} />
         </div>
         <div className="collaboratori">
           {listOfCollaborators.map((item, index) => {
             return (<Box key={index} message={item} />)
           })
           }
-          <InputBox saveCard={saveCard} toResponsabilites={false} />
+          <InputBox saveCard={handleSave} toResponsabilites={false} />
         </div>
       </div>
     </div>

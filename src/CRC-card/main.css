@@ -6,10 +6,12 @@
 
 }
 
-.CRCCard h5 {
+.CRCCard .nameOfTheClass {
   font-style: italic;
+  font-weight: bold;
   margin: 0;
   margin: 0.4rem 0;
+  font-size: 1.2rem;
 }
 
 .deleteBtn {

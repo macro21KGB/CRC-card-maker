@@ -10,12 +10,24 @@ input {
     background-color: transparent;
 }
 
+form {
+    position: relative;
+}
+
+input[type="text"] {
+    width: 90%;
+}
+
 input[type="submit"] {
+    position: absolute;
+    right: -3px;
+    top: 0;
     border: none;
     outline: none;
     background-color: royalblue;
     color: white;
     font-weight: bold;
     border-radius: 4px;
-    padding: 0.3rem 0.6rem;
+    padding: 0.2rem 0.5rem;
+    margin-left: auto;
 }

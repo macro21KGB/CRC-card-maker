@@ -13,18 +13,8 @@ import { nanoid } from "nanoid";
  *   }} value 
  */
 export const saveToLocalStorage = (key, value) => {
-    let currentArray = getFromLocalStorage(key) || [];
 
-    //if the value is already in the array, update it
-    const index = currentArray.findIndex(item => item.id === value.id);
-   evoLog("index: "+ index);
-    if (index > -1) {
-        currentArray[index] = value;
-    } else {
-        currentArray.push({ id: nanoid(10), ...value });
-    }
-
-    localStorage.setItem(key, JSON.stringify(currentArray));
+    localStorage.setItem(key, JSON.stringify(value));
 
 }
 
@@ -37,12 +27,20 @@ export const saveToLocalStorage = (key, value) => {
 export const deleteFromLocalStorage = (key, id) => {
     let currentArray = getFromLocalStorage(key) || [];
     const index = currentArray.findIndex(item => item.id === id);
+    evoLog(index);
+    evoLog(currentArray[0].id);
     if (index > -1) {
+
         currentArray.splice(index, 1);
     }
     localStorage.setItem(key, JSON.stringify(currentArray));
 }
 
+/**
+ * 
+ * @param {string} key 
+ * @returns {Object} cards
+ */
 export const getFromLocalStorage = (key) => {
     return JSON.parse(localStorage.getItem(key)) || [];
 }

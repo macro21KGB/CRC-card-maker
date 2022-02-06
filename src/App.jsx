@@ -13,16 +13,14 @@ function App() {
   useEffect(() => {
     const cardsFromLocalStorage = getFromLocalStorage('CRC-cards');
     setCards(cardsFromLocalStorage);
-    evoLog("SETUP")
-    evoLog(JSON.stringify(cardsFromLocalStorage))
   }, []);
-   
+
 
   const addCard = () => {
     setCards([
       ...cards,
       {
-        id: nanoid(),
+        id: nanoid(10),
         name: 'Default',
         resp: [],
         collab: []
@@ -33,18 +31,46 @@ function App() {
 
   const deleteCard = (id) => {
     const newCards = cards.filter(card => card.id !== id);
-    evoLog("DELETE")
-    deleteFromLocalStorage('CRC-card', id);
+    deleteFromLocalStorage('CRC-cards', id);
     setCards(newCards);
-    evoLog("\n\n\nDeleted card: " + id);
+  }
+
+  const saveName = (name, id) => {
+    const index = cards.findIndex(card => card.id === id);
+    const newCards = [...cards];
+
+    newCards[index].name = name;
+
+    setCards(newCards);
+    saveToLocalStorage('CRC-cards', newCards);
+  }
+
+  const saveCard = (message, toResponsabilita, id) => {
+    const index = cards.findIndex(card => card.id === id);
+    const newCards = [...cards];
+
+    if (toResponsabilita) {
+      newCards[index].resp = [...newCards[index].resp, message];
+    }
+    else {
+      newCards[index].collab = [...newCards[index].collab, message];
+    }
+
+
+    setCards(newCards);
+    saveToLocalStorage('CRC-cards', newCards);
+
   }
 
   return (
     <div className="App">
-      <button onClick={addCard}>AddCard</button>
-      {cards.map((card, index) => {
-        return (<CRCCard key={index} {...card} deleteCard={deleteCard} />)
-      })}
+      <button className='addCard' onClick={addCard}>AddCard</button>
+      <div className='cards'>
+        {cards.map((card, index) => {
+          return (<CRCCard key={index} name={card.name} resp={card.resp} id={card.id} collab={card.collab} deleteCard={deleteCard} saveCard={saveCard} saveName={saveName} />)
+        })}
+
+      </div>
     </div>
   )
 }

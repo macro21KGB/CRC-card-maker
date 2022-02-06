@@ -1,8 +1,30 @@
 .App {
   height: 100%;
-  display: flex;
   padding: 1rem;
+}
+
+.cards {
   display: flex;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
   gap: 1rem;
+  padding: 1rem;
+}
+
+@media print {
+  .addCard {
+    display: none;
+  }
+
+  .InputBox {
+    display: none;
+  }
+
+  .deleteBtn {
+    display: none;
+    visibility: hidden;
+    color: white;
+  }
+ 
 }

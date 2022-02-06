@@ -1,8 +1,18 @@
+import { useState } from 'react';
 import './main.css';
-const Box = ({ message }) => {
+
+const Box = ({ message, index, updateBox }) => {
+
+    const [messageBox, setMessageBox] = useState(message);
+
+    const handleChange = (updatedValue) => {
+        updateBox(updatedValue, index);
+        setMessageBox(updatedValue);
+    }
+
     return (
         <div className="box">
-            {message}
+            <input type="text" value={messageBox} onChange={(e) => { handleChange(e.target.value) }} />
         </div>
     );
 }

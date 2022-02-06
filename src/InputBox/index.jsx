@@ -19,16 +19,16 @@ const InputBox = ({ saveCard, toResponsabilites }) => {
      */
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (input.length === "") return;
+        if (input === "") return;
         saveCard(input, toResponsabilites);
-        setInput("");
+        setInput("")
     }
 
 
     return (
         <div className="InputBox">
             <form onSubmit={handleSubmit}>
-                <input type="text" placeholder="Aggiungi Responsabilita" onChange={(e) => setInput(e.target.value)} value={input} />
+                <input type="text" placeholder="Aggiungi Responsabilita" onInput={(e) => setInput(e.target.value)} value={input} />
                 <input type="submit" value="+" />
             </form>
         </div>
