@@ -28,7 +28,7 @@ const InputBox = ({ saveCard, toResponsabilites }) => {
     return (
         <div className="InputBox">
             <form onSubmit={handleSubmit}>
-                <input type="text" placeholder="Aggiungi Responsabilita" onInput={(e) => setInput(e.target.value)} value={input} />
+                <input type="text" placeholder={`Aggiungi ${toResponsabilites ? 'Responsabilità' : 'Collaboratori'}`} onInput={(e) => setInput(e.target.value)} value={input} />
                 <input type="submit" value="+" />
             </form>
         </div>

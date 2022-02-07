@@ -8,10 +8,10 @@ import evolog from 'evolog';
 
 /**
  * 
- * @param {{id: string, name: string, resp: string[], collab: string[], deleteCard:Function, saveCard: Function}} params 
+ * @param {{id: string, name: string, resp: string[], collab: string[], deleteCard:Function, saveCard: Function, deleteBox:Function}} params 
  * @returns 
  */
-const CRCCard = ({ id, name = "Default Class Name", resp, collab, deleteCard, saveCard, saveName }) => {
+const CRCCard = ({ id, name = "Default Class Name", resp, collab, deleteCard, saveCard, saveName, updateField, deleteBox }) => {
 
   const [listOfResponsabilites, setListOfResponsabilites] = useState([]);
   const [listOfCollaborators, setListOfCollaborators] = useState([]);
@@ -47,6 +47,22 @@ const CRCCard = ({ id, name = "Default Class Name", resp, collab, deleteCard, sa
     setNameOfTheClass(name);
   }
 
+  const handleUpdate = (value, index, toResponsabilita) => {
+    updateField(value, index, toResponsabilita, id);
+  }
+
+  const handleBoxDelete = (INindex, toResponsabilita) => {
+    if (toResponsabilita) {
+      setListOfResponsabilites(listOfResponsabilites.filter((_, index) => index !== INindex));
+    }
+    else {
+      setListOfCollaborators(listOfCollaborators.filter((_, index) => index !== INindex));
+    }
+
+    deleteBox(INindex, toResponsabilita, id);
+
+  }
+
 
   return (
     <div className="CRCCard">
@@ -56,14 +72,14 @@ const CRCCard = ({ id, name = "Default Class Name", resp, collab, deleteCard, sa
         <div className="responsabilita">
           {
             listOfResponsabilites.map((item, index) => {
-              return (<Box key={index} message={item} />)
+              return (<Box key={index} message={item} index={index} updateBox={handleUpdate} deleteBox={handleBoxDelete} toResponsabilita={true} />)
             })
           }
           <InputBox saveCard={handleSave} toResponsabilites={true} />
         </div>
         <div className="collaboratori">
           {listOfCollaborators.map((item, index) => {
-            return (<Box key={index} message={item} />)
+            return (<Box key={index} message={item} index={index} updateBox={handleUpdate} deleteBox={handleBoxDelete} toResponsabilita={false} />)
           })
           }
           <InputBox saveCard={handleSave} toResponsabilites={false} />

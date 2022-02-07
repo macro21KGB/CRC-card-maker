@@ -4,4 +4,12 @@
     padding: 0.2rem 0.6rem;
     word-break: break-all;
     max-width: 200px;
+    transition: all 150ms;
+    white-space: pre-line;
+}
+
+
+.box:hover {
+    background-color: rgba(202, 202, 202, 0.247);
+    cursor: pointer;
 }

@@ -1,19 +1,41 @@
 import { useState } from 'react';
 import './main.css';
+import Modal from '../Modal/index';
 
-const Box = ({ message, index, updateBox }) => {
+
+/**
+ * 
+ * @param {{message:string,index:number, updateBox:Function,deleteBox:Function,toResponsabilita:boolean}} params 
+ * @returns 
+ */
+const Box = ({ message, index, updateBox, deleteBox, toResponsabilita }) => {
 
     const [messageBox, setMessageBox] = useState(message);
+    const [showModal, setShowModal] = useState(false);
 
     const handleChange = (updatedValue) => {
-        updateBox(updatedValue, index);
-        setMessageBox(updatedValue);
+        setShowModal(!showModal)
     }
 
+    const updateValue = (value) => {
+        updateBox(value, index, toResponsabilita);
+        setMessageBox(value);
+    }
+
+    const handleDeleteBox = () => {
+        console.log("DELETE BOX")
+        deleteBox(index, toResponsabilita);
+    }
+
+    const closeModal = () => setShowModal(false);
+
     return (
-        <div className="box">
-            <input type="text" value={messageBox} onChange={(e) => { handleChange(e.target.value) }} />
-        </div>
+        <>
+            <div className="box" onClick={handleChange}>
+                {messageBox}
+            </div>
+            {showModal && <Modal originalValue={messageBox} closeModal={closeModal} updateValue={updateValue} deleteBox={handleDeleteBox} />}
+        </>
     );
 }
 
