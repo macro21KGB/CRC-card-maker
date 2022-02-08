@@ -13,11 +13,12 @@
     background-color: white;
     min-height: 160px;
     padding: 1rem;
-    z-index: 99999;
     height: auto;
+    z-index: 23;
     overflow: auto;
-    border: 2px solid orange;
     border-radius: 4px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.199);
+
 }
 
 .modal textarea {

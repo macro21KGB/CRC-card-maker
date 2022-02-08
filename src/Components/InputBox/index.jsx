@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import Box from "../Box";
+import { useState } from "react";
 import './main.css';
 
 
@@ -21,7 +20,7 @@ const InputBox = ({ saveCard, toResponsabilites }) => {
         e.preventDefault();
         if (input === "") return;
         saveCard(input, toResponsabilites);
-        setInput("")
+        setInput("");
     }
 
 
